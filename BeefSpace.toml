@@ -1,0 +1,10 @@
+FileVersion = 1
+
+[Workspace]
+StartupProject = "beefgame"
+
+[Projects]
+beefgame = {Path = "."}
+corlib = "*"
+SDL3 = "*"
+SDL3 = {Path = "deps/SDL3-Beef"}

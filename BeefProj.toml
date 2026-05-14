@@ -1,0 +1,7 @@
+FileVersion = 1
+Dependencies = {corlib = "*", SDL3 = "*"}
+
+[Project]
+Name = "beefgame"
+TargetType = "BeefGUIApplication"
+StartupObject = "beefgame.Program"
