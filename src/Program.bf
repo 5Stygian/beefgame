@@ -5,6 +5,7 @@ using SDL3;
 
 public static class Program
 {
+	public static bool IsRunning = true;
 	public static bool* KeyStates = SDL_GetKeyboardState(null);
 
 	public static void Main()
@@ -24,18 +25,20 @@ public static class Program
 		}
 		defer SDL_DestroyWindow(window);
 
-		while (true)
+		while (Program.IsRunning)
 		{
 			SDL_Event ev = .();
 			while (SDL_PollEvent(&ev))
 			{
 				if (ev.type == (.)SDL_EventType.SDL_EVENT_QUIT)
 					return;
-				else if (ev.type == (.)SDL_EventType.SDL_EVENT_KEY_DOWN)
-				{
-					Debug.WriteLine("{0}", Program.KeyStates[(int)SDL_Scancode.SDL_SCANCODE_W]);
-				}
 			}
+
+			SDL_PumpEvents();
+
+			if (Program.KeyStates[SDL_Scancode.SDL_SCANCODE_ESCAPE])
+				Program.IsRunning = false;
+			
 			SDL_Delay(16);
 		}
 	}
