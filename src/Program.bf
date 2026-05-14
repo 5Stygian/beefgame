@@ -3,8 +3,10 @@ namespace beefgame;
 using System.Diagnostics;
 using SDL3;
 
-class Program
+public static class Program
 {
+	public static bool* KeyStates = SDL_GetKeyboardState(null);
+
 	public static void Main()
 	{
 		if (!SDL_Init(.SDL_INIT_VIDEO))
@@ -29,6 +31,10 @@ class Program
 			{
 				if (ev.type == (.)SDL_EventType.SDL_EVENT_QUIT)
 					return;
+				else if (ev.type == (.)SDL_EventType.SDL_EVENT_KEY_DOWN)
+				{
+					Debug.WriteLine("{0}", Program.KeyStates[(int)SDL_Scancode.SDL_SCANCODE_W]);
+				}
 			}
 			SDL_Delay(16);
 		}
