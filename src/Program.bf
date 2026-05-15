@@ -34,20 +34,20 @@ public static class Program
             SDL_Event Event = SDL_Event();
             while (SDL_PollEvent(&Event))
             {
-                if (Utils.TestEventType(Event, SDL_EventType.SDL_EVENT_QUIT))
+                if (Utils.TestEventType(Event, .SDL_EVENT_QUIT))
                     Program.StopRunning();
 
-                if (Utils.TestEventType(Event, SDL_EventType.SDL_EVENT_WINDOW_RESIZED))
+                if (Utils.TestEventType(Event, .SDL_EVENT_WINDOW_RESIZED))
                     Program.WindowStats.RefreshStats();
             }
 
             SDL_PumpEvents();
 
-            if (Utils.TestScanCode(SDL_Scancode.SDL_SCANCODE_LCTRL))
+            if (Utils.TestScanCode(.SDL_SCANCODE_LCTRL))
             {
-                if (Utils.TestScanCode(SDL_Scancode.SDL_SCANCODE_C))
+                if (Utils.TestScanCode(.SDL_SCANCODE_C))
                     Program.StopRunning();
-                if (Utils.TestScanCode(SDL_Scancode.SDL_SCANCODE_W))
+                if (Utils.TestScanCode(.SDL_SCANCODE_W))
                     Program.WindowStats.Display();
             }
 
