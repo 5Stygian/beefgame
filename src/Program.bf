@@ -31,11 +31,14 @@ public static class Program
         Program.StartRunning();
         while (Program.IsRunning)
         {
-            SDL_Event ev = .();
-            while (SDL_PollEvent(&ev))
+            SDL_Event Event = SDL_Event();
+            while (SDL_PollEvent(&Event))
             {
-                if (ev.type == (.)SDL_EventType.SDL_EVENT_QUIT)
-                    return;
+                if (Utils.TestEventType(Event, SDL_EventType.SDL_EVENT_QUIT))
+                    Program.StopRunning();
+
+                if (Utils.TestEventType(Event, SDL_EventType.SDL_EVENT_WINDOW_RESIZED))
+                    Program.WindowStats.RefreshStats();
             }
 
             SDL_PumpEvents();

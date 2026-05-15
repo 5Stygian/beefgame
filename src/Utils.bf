@@ -10,6 +10,11 @@ public static class Utils
     {
         return Program.KeyStates[(int)ScanCode];
     }
+
+    public static bool TestEventType(SDL_Event Event, SDL_EventType EventType)
+    {
+        return (Event.type == (uint32)EventType);
+    }
 }
 
 public struct WindowStatsStruct
