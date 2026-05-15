@@ -6,9 +6,10 @@ using SDL3;
 public static class Program
 {
     public static bool IsRunning = false;
-    public static bool* KeyStates = SDL_GetKeyboardState(null);
-
     public static WindowStatsStruct* WindowStats;
+
+    public static bool* KeyStates = SDL_GetKeyboardState(null);
+    public static SDL_Renderer* Renderer;
 
     public static void Main()
     {
@@ -20,13 +21,17 @@ public static class Program
         defer SDL_Quit();
 
         SDL_Window* window = SDL_CreateWindow("beefgame", 1280, 720, .SDL_WINDOW_RESIZABLE);
-        if (window == null)
+        if (window === null)
         {
             Debug.WriteLine("SDL_CreateWindow failed: {0}", SDL_GetError());
             return;
         }
         defer SDL_DestroyWindow(window);
+
         Program.WindowStats = scope WindowStatsStruct(window);
+        Program.Renderer = SDL_GetRenderer(window);
+
+        Player player = scope Player();
 
         Program.StartRunning();
         while (Program.IsRunning)

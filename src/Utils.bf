@@ -13,7 +13,7 @@ public static class Utils
 
     public static bool TestEventType(SDL_Event Event, SDL_EventType EventType)
     {
-        return (Event.type == (uint32)EventType);
+        return (Event.type === (uint32)EventType);
     }
 }
 
