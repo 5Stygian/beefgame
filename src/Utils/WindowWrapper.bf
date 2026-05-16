@@ -1,25 +1,10 @@
-namespace beefgame;
+namespace beefgame.Utils;
 
 using System;
 using System.Diagnostics;
 using SDL3;
 
-public static class Utils
-{
-    [Inline]
-    public static bool TestScanCode(SDL_Scancode ScanCode)
-    {
-        return Program.KeyStates[(int)ScanCode];
-    }
-    
-    [Inline]
-    public static bool TestEventType(SDL_Event Event, SDL_EventType EventType)
-    {
-        return (Event.type === (uint32)EventType);
-    }
-}
-
-public struct WindowStatsStruct
+public struct WindowWrapper
 {
     public char8* Title = "";
     public int Width = 0;
@@ -34,10 +19,10 @@ public struct WindowStatsStruct
     public this(SDL_Window* window)
     {
         this.Window = window;
-        this.RefreshStats();
+        this.UpdateMembers();
     }
 
-    public void RefreshStats() mut {
+    public void UpdateMembers() mut {
         if (!SDL_GetWindowSizeInPixels(this.Window, (int32*)&this.Width, (int32*)&this.Height))
             Debug.WriteLine("SDL_GetWindowSizeInPixels failed: {0}", SDL_GetError());
 
@@ -48,7 +33,7 @@ public struct WindowStatsStruct
         this.CenterY = this.Height / 2;
     }
 
-    public void Display() mut
+    public void DebugDisplay() mut
     {
         Debug.WriteLine(
             "<\nWindow {0}:\nDimensions: ({1}, {2})\nCenter: ({3}, {4})\nTitle: {5}\nFlags: {6}\n>",
@@ -60,5 +45,35 @@ public struct WindowStatsStruct
             &this.Title,
             this.Flags
         );
+    }
+
+    public void Render()
+    {
+        SDL_FillSurfaceRect(
+            this.GetSurface(),
+            null,
+            SDL_MapRGB(
+                SDL_GetPixelFormatDetails(this.GetPixelFormat()),
+                null,
+                0, 0, 0
+            )
+        );
+    }
+
+    [Inline]
+    public void Update() {
+        SDL_UpdateWindowSurface(this.Window);
+    }
+
+    [Inline]
+    public SDL_Surface* GetSurface()
+    {
+        return SDL_GetWindowSurface(this.Window);
+    }
+
+    [Inline]
+    public SDL_PixelFormat GetPixelFormat()
+    {
+        return SDL_GetWindowSurface(this.Window).format;
     }
 }

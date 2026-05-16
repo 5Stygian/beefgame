@@ -1,15 +1,16 @@
 namespace beefgame;
 
+using beefgame.Utils;
+using System;
 using System.Diagnostics;
 using SDL3;
 
 public static class Program
 {
     public static bool IsRunning = false;
-    public static WindowStatsStruct* WindowStats;
+    public static WindowWrapper* Window;
 
     public static bool* KeyStates = SDL_GetKeyboardState(null);
-    public static SDL_Renderer* Renderer;
 
     public static void Main()
     {
@@ -28,10 +29,12 @@ public static class Program
         }
         defer SDL_DestroyWindow(window);
 
-        Program.WindowStats = scope WindowStatsStruct(window);
-        Program.Renderer = SDL_GetRenderer(window);
+        Program.Window = scope WindowWrapper(window);
 
-        Player player = scope Player();
+        Rect rect = scope Rect(
+            Program.Window.CenterX, Program.Window.CenterY, 20, 20,
+            255, 255, 255, 255
+        );
 
         Program.StartRunning();
         while (Program.IsRunning)
@@ -43,7 +46,7 @@ public static class Program
                     Program.StopRunning();
 
                 if (Utils.TestEventType(Event, .SDL_EVENT_WINDOW_RESIZED))
-                    Program.WindowStats.RefreshStats();
+                    Program.Window.UpdateMembers();
             }
 
             SDL_PumpEvents();
@@ -53,18 +56,24 @@ public static class Program
                 if (Utils.TestScanCode(.SDL_SCANCODE_C))
                     Program.StopRunning();
                 if (Utils.TestScanCode(.SDL_SCANCODE_W))
-                    Program.WindowStats.Display();
+                    Program.Window.DebugDisplay();
             }
+
+            Program.Window.Render();
+            rect.Render(Program.Window.GetSurface());
+            Program.Window.Update();
 
             SDL_Delay(16);
         }
     }
 
+    [Inline]
     public static void StartRunning()
     {
         Program.IsRunning = true;
     }
 
+    [Inline]
     public static void StopRunning()
     {
         Program.IsRunning = false;
