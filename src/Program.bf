@@ -31,7 +31,7 @@ public static class Program
 
         Program.Window = scope WindowWrapper(window);
 
-        Rect rect = scope Rect(
+        Player player = scope Player(
             (int32)Program.Window.CenterX, (int32)Program.Window.CenterY, 20, 20,
             255, 255, 255, 255
         );
@@ -52,13 +52,13 @@ public static class Program
             SDL_PumpEvents();
 
             if (Utils.TestScanCode(.SDL_SCANCODE_W))
-                rect.ModY(-10);
+                player.ModY(-10);
             if (Utils.TestScanCode(.SDL_SCANCODE_A))
-                rect.ModX(-10);
+                player.ModX(-10);
             if (Utils.TestScanCode(.SDL_SCANCODE_S))
-                rect.ModY(10);
+                player.ModY(10);
             if (Utils.TestScanCode(.SDL_SCANCODE_D))
-                rect.ModX(10);
+                player.ModX(10);
 
             if (Utils.TestScanCode(.SDL_SCANCODE_LCTRL))
             {
@@ -69,7 +69,7 @@ public static class Program
             }
 
             Program.Window.Render();
-            rect.Render(Program.Window.GetSurface());
+            player.Render(Program.Window.GetSurface());
             Program.Window.Update();
 
             SDL_Delay(16);
