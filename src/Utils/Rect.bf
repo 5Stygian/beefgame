@@ -2,24 +2,24 @@ namespace beefgame.Utils;
 
 using SDL3;
 
-public class Rect
+public class Rect : ISDL_Drawable
 {
     private SDL_Rect Rect;
     private SDL_Color Color;
 
-    public this(int x, int y, int w, int h, int r, int g, int b, int a)
+    public this(int32 x, int32 y, int32 w, int32 h, uint8 r, uint8 g, uint8 b, uint8 a)
     {
         this.Rect = *scope SDL_Rect();
-        this.Rect.x = (int32)x;
-        this.Rect.y = (int32)y;
-        this.Rect.w = (int32)w;
-        this.Rect.h = (int32)h;
+        this.Rect.x = x;
+        this.Rect.y = y;
+        this.Rect.w = w;
+        this.Rect.h = h;
 
         this.Color = *scope SDL_Color();
-        this.Color.r = (uint8)r;
-        this.Color.g = (uint8)g;
-        this.Color.b = (uint8)b;
-        this.Color.a = (uint8)a;
+        this.Color.r = r;
+        this.Color.g = g;
+        this.Color.b = b;
+        this.Color.a = a;
     }
 
     public void Render(SDL_Surface* surface)
@@ -33,6 +33,15 @@ public class Rect
                 this.Color.r, this.Color.g, this.Color.b
             )
         );
+    }
+
+    public void ModX(int32 x)
+    {
+        this.Rect.x += x;
+    }
+    public void ModY(int32 y)
+    {
+        this.Rect.y += y;
     }
 
     public SDL_Color GetColor()
