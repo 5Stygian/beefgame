@@ -7,6 +7,8 @@ public class Rect : IDrawable
     protected SDL_Rect Rect;
     protected SDL_Color Color;
 
+    protected SDL_Rect CollisionResult;
+
     public this(int32 x, int32 y, int32 w, int32 h, uint8 r, uint8 g, uint8 b, uint8 a)
     {
         this.Rect = *scope SDL_Rect();
@@ -20,6 +22,8 @@ public class Rect : IDrawable
         this.Color.g = g;
         this.Color.b = b;
         this.Color.a = a;
+
+        this.CollisionResult = *scope SDL_Rect();
     }
 
     public void Render(SDL_Surface* surface)
@@ -35,11 +39,24 @@ public class Rect : IDrawable
         );
     }
 
+    public bool CheckCollision(Rect other)
+    {
+        return SDL_GetRectIntersection(&this.Rect, &other.Rect, &this.CollisionResult);
+    }
+
+    public void ModX(int32 x)
+    {
+        this.Rect.x += x;
+    }
+    public void ModY(int32 y)
+    {
+        this.Rect.y += y;
+    }
+
     public SDL_Color GetColor()
     {
         return this.Color;
     }
-
     public void SetColor(SDL_Color color)
     {
         this.Color = color;

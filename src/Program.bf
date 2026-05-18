@@ -36,6 +36,11 @@ public static class Program
             255, 255, 255, 255
         );
 
+        Rect testRect = scope Rect(
+            0, 0, 200, (int32)Program.Window.Height,
+            255, 0, 0, 255
+        );
+
         Program.StartRunning();
         while (Program.IsRunning)
         {
@@ -69,7 +74,14 @@ public static class Program
             }
 
             Program.Window.Render();
+            testRect.Render(Program.Window.GetSurface());
             player.Render(Program.Window.GetSurface());
+
+            if (player.CheckCollision(testRect))
+                Program.Window.ChangeBackgroundColor(128, 128, 128);
+            else
+                Program.Window.ChangeBackgroundColor(0, 0, 0);
+
             Program.Window.Update();
 
             SDL_Delay(16);
