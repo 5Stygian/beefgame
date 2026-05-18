@@ -2,8 +2,10 @@ namespace beefgame.Utils;
 
 using SDL3;
 
-public class Rect : ISDL_Drawable
+public class Rect : IDrawable
 {
+    public static int32 MoveSpeed = 10;
+
     private SDL_Rect Rect;
     private SDL_Color Color;
 
@@ -35,13 +37,21 @@ public class Rect : ISDL_Drawable
         );
     }
 
-    public void ModX(int32 x)
+    public void MoveRight()
     {
-        this.Rect.x += x;
+        this.Rect.x += Player.MoveSpeed;
     }
-    public void ModY(int32 y)
+    public void MoveDown()
     {
-        this.Rect.y += y;
+        this.Rect.y += Player.MoveSpeed;
+    }
+    public void MoveLeft()
+    {
+        this.Rect.x -= Player.MoveSpeed;
+    }
+    public void MoveUp()
+    {
+        this.Rect.y -= Player.MoveSpeed;
     }
 
     public SDL_Color GetColor()

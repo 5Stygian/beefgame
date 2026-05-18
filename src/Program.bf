@@ -52,13 +52,13 @@ public static class Program
             SDL_PumpEvents();
 
             if (Utils.TestScanCode(.SDL_SCANCODE_W))
-                player.ModY(-10);
+                player.MoveUp();
             if (Utils.TestScanCode(.SDL_SCANCODE_A))
-                player.ModX(-10);
+                player.MoveLeft();
             if (Utils.TestScanCode(.SDL_SCANCODE_S))
-                player.ModY(10);
+                player.MoveDown();
             if (Utils.TestScanCode(.SDL_SCANCODE_D))
-                player.ModX(10);
+                player.MoveRight();
 
             if (Utils.TestScanCode(.SDL_SCANCODE_LCTRL))
             {
