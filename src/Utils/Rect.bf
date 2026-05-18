@@ -4,10 +4,8 @@ using SDL3;
 
 public class Rect : IDrawable
 {
-    public static int32 MoveSpeed = 10;
-
-    private SDL_Rect Rect;
-    private SDL_Color Color;
+    protected SDL_Rect Rect;
+    protected SDL_Color Color;
 
     public this(int32 x, int32 y, int32 w, int32 h, uint8 r, uint8 g, uint8 b, uint8 a)
     {
@@ -35,23 +33,6 @@ public class Rect : IDrawable
                 this.Color.r, this.Color.g, this.Color.b
             )
         );
-    }
-
-    public void MoveRight()
-    {
-        this.Rect.x += Player.MoveSpeed;
-    }
-    public void MoveDown()
-    {
-        this.Rect.y += Player.MoveSpeed;
-    }
-    public void MoveLeft()
-    {
-        this.Rect.x -= Player.MoveSpeed;
-    }
-    public void MoveUp()
-    {
-        this.Rect.y -= Player.MoveSpeed;
     }
 
     public SDL_Color GetColor()
