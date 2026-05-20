@@ -39,28 +39,34 @@ public class Rect : IDrawable
         );
     }
 
+    [Inline]
     public bool CheckCollision(Rect other)
     {
         return SDL_GetRectIntersection(&this.Rect, &other.Rect, &this.CollisionResult);
     }
 
+    [Inline]
     public void ModX(int32 x)
     {
         this.Rect.x += x;
     }
+    [Inline]
     public void ModY(int32 y)
     {
         this.Rect.y += y;
     }
 
+    [Inline]
     public SDL_Color GetColor()
     {
         return this.Color;
     }
+    [Inline]
     public void SetColor(SDL_Color color)
     {
         this.Color = color;
     }
+    [Inline]
     public void SetColor(uint8 r, uint8 g, uint8 b, uint8 a)
     {
         this.Color.r = r;
