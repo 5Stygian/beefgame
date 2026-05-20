@@ -1,6 +1,6 @@
 namespace beefgame;
 
-using beefgame.Utils;
+using beefgame.Utils.SDL3;
 
 public class Player : Rect
 {
