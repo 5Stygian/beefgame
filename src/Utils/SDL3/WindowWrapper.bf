@@ -1,4 +1,4 @@
-namespace beefgame.Utils;
+namespace beefgame.Utils.SDL3;
 
 using System;
 using System.Diagnostics;
