@@ -1,10 +1,11 @@
 namespace beefgame.Utils.SDL3;
 
 using SDL3;
+using System;
 
 public class Rect : IDrawable
 {
-    protected SDL_Rect Rect;
+    public SDL_Rect Rect;
     protected SDL_Color Color;
 
     protected SDL_Rect CollisionResult;

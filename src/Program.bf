@@ -1,7 +1,7 @@
 namespace beefgame;
 
 using beefgame.Utils;
-uisng beefgame.Utils.SDL3;
+using beefgame.Utils.SDL3;
 using System;
 using System.Diagnostics;
 using SDL3;
@@ -53,9 +53,15 @@ public static class Program
 
                 if (Utils.TestEventType(Event, .SDL_EVENT_WINDOW_RESIZED))
                     Program.Window.UpdateMembers();
+
+                if (Utils.TestEventType(Event, .SDL_EVENT_KEY_DOWN))
+                    if (Utils.TestScanCode(.SDL_SCANCODE_SPACE))
+                        player.Dodge();
             }
 
             SDL_PumpEvents();
+
+            player.SetPreviousPosition(player.Rect.x, player.Rect.y);
 
             if (Utils.TestScanCode(.SDL_SCANCODE_W))
                 player.MoveUp();
@@ -66,12 +72,20 @@ public static class Program
             if (Utils.TestScanCode(.SDL_SCANCODE_D))
                 player.MoveRight();
 
+            player.CheckDirection();
+
             if (Utils.TestScanCode(.SDL_SCANCODE_LCTRL))
             {
                 if (Utils.TestScanCode(.SDL_SCANCODE_C))
                     Program.StopRunning();
                 if (Utils.TestScanCode(.SDL_SCANCODE_W))
                     Program.Window.DebugDisplay();
+            }
+
+            if (Utils.TestScanCode(.SDL_SCANCODE_LALT))
+            {
+                if (Utils.TestScanCode(.SDL_SCANCODE_V))
+	                Debug.WriteLine("{}", player.Direction);
             }
 
             Program.Window.Render();
