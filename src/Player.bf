@@ -7,7 +7,7 @@ using System;
 public class Player : Rect
 {
     private static int32 MoveSpeed = 10;
-    private static int32 DashSpeed = 200;
+    private static int32 DashSpeed = 150;
 
     public Directions Direction;
 
