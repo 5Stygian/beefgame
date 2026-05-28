@@ -8,7 +8,7 @@ public class Rect : IDrawable
     public SDL_Rect Rect;
     protected SDL_Color Color;
 
-    protected SDL_Rect CollisionResult;
+    private SDL_Rect CollisionResult;
 
     public this(int32 x, int32 y, int32 w, int32 h, uint8 r, uint8 g, uint8 b, uint8 a)
     {

@@ -10,6 +10,7 @@ public static class Program
 {
     public static bool IsRunning = false;
     public static WindowWrapper* Window;
+    public static Player Player;
 
     public static bool* KeyStates = SDL_GetKeyboardState(null);
 
@@ -32,7 +33,7 @@ public static class Program
 
         Program.Window = scope WindowWrapper(window);
 
-        Player player = scope Player(
+        Program.Player = scope Player(
             (int32)Program.Window.CenterX, (int32)Program.Window.CenterY, 20, 20,
             255, 255, 255, 255
         );
@@ -56,43 +57,20 @@ public static class Program
 
                 if (Utils.TestEventType(Event, .SDL_EVENT_KEY_DOWN))
                     if (Utils.TestScanCode(.SDL_SCANCODE_SPACE))
-                        player.Dodge();
+                        Program.Player.Dodge();
             }
 
             SDL_PumpEvents();
 
-            player.SetPreviousPosition(player.Rect.x, player.Rect.y);
+            Program.Player.Move();
 
-            if (Utils.TestScanCode(.SDL_SCANCODE_W))
-                player.MoveUp();
-            if (Utils.TestScanCode(.SDL_SCANCODE_A))
-                player.MoveLeft();
-            if (Utils.TestScanCode(.SDL_SCANCODE_S))
-                player.MoveDown();
-            if (Utils.TestScanCode(.SDL_SCANCODE_D))
-                player.MoveRight();
-
-            player.CheckDirection();
-
-            if (Utils.TestScanCode(.SDL_SCANCODE_LCTRL))
-            {
-                if (Utils.TestScanCode(.SDL_SCANCODE_C))
-                    Program.StopRunning();
-                if (Utils.TestScanCode(.SDL_SCANCODE_W))
-                    Program.Window.DebugDisplay();
-            }
-
-            if (Utils.TestScanCode(.SDL_SCANCODE_LALT))
-            {
-                if (Utils.TestScanCode(.SDL_SCANCODE_V))
-	                Debug.WriteLine("{}", player.Direction);
-            }
+            Program.RunKeybinds();
 
             Program.Window.Render();
             testRect.Render(Program.Window.GetSurface());
-            player.Render(Program.Window.GetSurface());
+            Program.Player.Render(Program.Window.GetSurface());
 
-            if (player.CheckCollision(testRect))
+            if (Program.Player.CheckCollision(testRect))
                 Program.Window.ChangeBackgroundColor(128, 128, 128);
             else
                 Program.Window.ChangeBackgroundColor(0, 0, 0);
@@ -113,5 +91,23 @@ public static class Program
     public static void StopRunning()
     {
         Program.IsRunning = false;
+    }
+
+    [Inline]
+    public static void RunKeybinds()
+    {
+        if (Utils.TestScanCode(.SDL_SCANCODE_LCTRL))
+        {
+            if (Utils.TestScanCode(.SDL_SCANCODE_C))
+                Program.StopRunning();
+            if (Utils.TestScanCode(.SDL_SCANCODE_W))
+                Program.Window.DebugDisplay();
+        }
+
+        if (Utils.TestScanCode(.SDL_SCANCODE_LALT))
+        {
+            if (Utils.TestScanCode(.SDL_SCANCODE_V))
+                Debug.WriteLine("{}", Program.Player.Direction);
+        }
     }
 }

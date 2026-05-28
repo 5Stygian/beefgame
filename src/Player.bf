@@ -2,6 +2,7 @@ namespace beefgame;
 
 using beefgame.Utils;
 using beefgame.Utils.SDL3;
+using System;
 
 public class Player : Rect
 {
@@ -17,13 +18,40 @@ public class Player : Rect
     {
     }
 
+    [Inline]
+    public void Move()
+    {
+        this.SetPreviousPosition(this.Rect.x, this.Rect.y);
+
+        if (Utils.TestScanCode(.SDL_SCANCODE_W))
+            this.MoveUp();
+        if (Utils.TestScanCode(.SDL_SCANCODE_A))
+            this.MoveLeft();
+        if (Utils.TestScanCode(.SDL_SCANCODE_S))
+            this.MoveDown();
+        if (Utils.TestScanCode(.SDL_SCANCODE_D))
+            this.MoveRight();
+
+        // Prevent the player from leaving the window.
+        if (!(0 < this.Rect.x))
+	        this.Rect.x += Math.Abs(this.Rect.x);
+        if (!(this.Rect.x + this.Rect.w < Program.Window.Width))
+	        this.Rect.x -= Math.Abs((int32)Program.Window.Width - this.Rect.x - this.Rect.w);
+
+        if (!(0 < this.Rect.y))
+            this.Rect.y += Math.Abs(this.Rect.y);
+        if (!(this.Rect.y + this.Rect.h < Program.Window.Height))
+	        this.Rect.y -= Math.Abs((int32)Program.Window.Height - this.Rect.y - this.Rect.h);
+
+        this.CheckDirection();
+    }
+
     public void SetPreviousPosition(int32 x, int32 y)
     {
         this.lastX = x;
         this.lastY = y;
     }
 
-    // surely there is an easier way to do this.
     public void CheckDirection()
     {
         bool IsMovingNorth = this.lastY > this.Rect.y;
