@@ -9,7 +9,8 @@ public class Player : Rect
     private static int32 MoveSpeed = 10;
     private static int32 DashSpeed = 150;
 
-    public Directions Direction;
+    public bool IsDodging = false;
+    public Directions Direction = Directions.ZILCH;
 
     private int32 lastX;
     private int32 lastY;
