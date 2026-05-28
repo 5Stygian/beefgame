@@ -3,6 +3,7 @@ namespace beefgame;
 using beefgame.Utils;
 using beefgame.Utils.SDL3;
 using System;
+using System.Diagnostics;
 
 public class Player : Rect
 {
@@ -45,6 +46,46 @@ public class Player : Rect
 	        this.Rect.y -= Math.Abs((int32)Program.Window.Height - this.Rect.y - this.Rect.h);
 
         this.CheckDirection();
+    }
+
+    public void Dodge()
+    {
+        if (!this.IsDodging)
+        {
+            switch (this.Direction)
+            {
+            case Directions.N:
+                this.Rect.y -= Player.DashSpeed;
+    
+            case Directions.S:
+                this.Rect.y += Player.DashSpeed;
+    
+            case Directions.E:
+                this.Rect.x += Player.DashSpeed;
+    
+            case Directions.W:
+                this.Rect.x -= Player.DashSpeed;
+    
+            case Directions.NE:
+                this.Rect.y -= Player.DashSpeed;
+                this.Rect.x += Player.DashSpeed;
+    
+            case Directions.NW:
+                this.Rect.y -= Player.DashSpeed;
+                this.Rect.x -= Player.DashSpeed;
+    
+            case Directions.SE:
+                this.Rect.y += Player.DashSpeed;
+                this.Rect.x += Player.DashSpeed;
+    
+            case Directions.SW:
+                this.Rect.y += Player.DashSpeed;
+                this.Rect.x -= Player.DashSpeed;
+    
+            default:
+                return;
+            }
+        }
     }
 
     public void SetPreviousPosition(int32 x, int32 y)
@@ -98,42 +139,5 @@ public class Player : Rect
     public void MoveUp()
     {
         this.Rect.y -= Player.MoveSpeed;
-    }
-
-    public void Dodge()
-    {
-        switch (this.Direction)
-        {
-        case Directions.N:
-            this.Rect.y -= Player.DashSpeed;
-
-        case Directions.S:
-            this.Rect.y += Player.DashSpeed;
-
-        case Directions.E:
-            this.Rect.x += Player.DashSpeed;
-
-        case Directions.W:
-            this.Rect.x -= Player.DashSpeed;
-
-        case Directions.NE:
-            this.Rect.y -= Player.DashSpeed;
-            this.Rect.x += Player.DashSpeed;
-
-        case Directions.NW:
-            this.Rect.y -= Player.DashSpeed;
-            this.Rect.x -= Player.DashSpeed;
-
-        case Directions.SE:
-            this.Rect.y += Player.DashSpeed;
-            this.Rect.x += Player.DashSpeed;
-
-        case Directions.SW:
-            this.Rect.y += Player.DashSpeed;
-            this.Rect.x -= Player.DashSpeed;
-
-        default:
-            return;
-        }
     }
 }

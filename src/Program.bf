@@ -9,9 +9,11 @@ using SDL3;
 public static class Program
 {
     public static bool IsRunning = false;
-    public static bool* KeyStates = SDL_GetKeyboardState(null);
+
     public static Player Player;
+
     public static WindowWrapper* Window;
+    public static bool* KeyStates = SDL_GetKeyboardState(null);
 
     public static void Main()
     {
@@ -53,14 +55,6 @@ public static class Program
 
                 if (Utils.TestEventType(Event, .SDL_EVENT_WINDOW_RESIZED))
                     Program.Window.UpdateMembers();
-
-                // need to make it so a key cant be held
-                if (Utils.TestEventType(Event, .SDL_EVENT_KEY_DOWN))
-                    if (Utils.TestScanCode(.SDL_SCANCODE_SPACE) && !Program.Player.IsDodging)
-                    {
-                        Program.Player.IsDodging = true;
-                        Program.Player.Dodge();
-                    }
             }
 
             SDL_PumpEvents();
