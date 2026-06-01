@@ -55,13 +55,19 @@ public static class Program
 
                 if (Utils.TestEventType(Event, .SDL_EVENT_WINDOW_RESIZED))
                     Program.Window.UpdateMembers();
+
+                if (Utils.TestEventType(Event, .SDL_EVENT_KEY_DOWN))
+                {
+                    if (Utils.IsKeyClicked(Event, .SDL_SCANCODE_SPACE))
+                        Program.Player.Dodge();
+                }
             }
 
             SDL_PumpEvents();
 
             Program.Player.Move();
 
-            Program.RunKeybinds();
+            Program.CheckKeybinds();
 
             Program.Window.Render();
             testRect.Render(Program.Window.GetSurface());
@@ -91,19 +97,19 @@ public static class Program
     }
 
     [Inline]
-    public static void RunKeybinds()
+    public static void CheckKeybinds()
     {
-        if (Utils.TestScanCode(.SDL_SCANCODE_LCTRL))
+        if (Utils.IsKeyHeld(.SDL_SCANCODE_LCTRL))
         {
-            if (Utils.TestScanCode(.SDL_SCANCODE_C))
+            if (Utils.IsKeyHeld(.SDL_SCANCODE_C))
                 Program.StopRunning();
-            if (Utils.TestScanCode(.SDL_SCANCODE_W))
+            if (Utils.IsKeyHeld(.SDL_SCANCODE_W))
                 Program.Window.DebugDisplay();
         }
 
-        if (Utils.TestScanCode(.SDL_SCANCODE_LALT))
+        if (Utils.IsKeyHeld(.SDL_SCANCODE_LALT))
         {
-            if (Utils.TestScanCode(.SDL_SCANCODE_V))
+            if (Utils.IsKeyHeld(.SDL_SCANCODE_V))
                 Debug.WriteLine("{}", Program.Player.Direction);
         }
     }
