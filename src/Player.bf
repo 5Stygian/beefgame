@@ -48,6 +48,7 @@ public class Player : Rect
         this.CheckDirection();
     }
 
+	[Inline]
     public void Dodge()
     {
         if (!this.IsDodging)
