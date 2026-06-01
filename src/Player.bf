@@ -10,7 +10,6 @@ public class Player : Rect
     private static int32 MoveSpeed = 10;
     private static int32 DashSpeed = 150;
 
-    public bool IsDodging = false;
     public Directions Direction = Directions.ZILCH;
 
     private int32 lastX;
@@ -25,13 +24,13 @@ public class Player : Rect
     {
         this.SetPreviousPosition(this.Rect.x, this.Rect.y);
 
-        if (Utils.TestScanCode(.SDL_SCANCODE_W))
+        if (Utils.IsKeyHeld(.SDL_SCANCODE_W))
             this.MoveUp();
-        if (Utils.TestScanCode(.SDL_SCANCODE_A))
+        if (Utils.IsKeyHeld(.SDL_SCANCODE_A))
             this.MoveLeft();
-        if (Utils.TestScanCode(.SDL_SCANCODE_S))
+        if (Utils.IsKeyHeld(.SDL_SCANCODE_S))
             this.MoveDown();
-        if (Utils.TestScanCode(.SDL_SCANCODE_D))
+        if (Utils.IsKeyHeld(.SDL_SCANCODE_D))
             this.MoveRight();
 
         // Prevent the player from leaving the window.
@@ -51,42 +50,39 @@ public class Player : Rect
 	[Inline]
     public void Dodge()
     {
-        if (!this.IsDodging)
-        {
-            switch (this.Direction)
-            {
-            case Directions.N:
-                this.Rect.y -= Player.DashSpeed;
-    
-            case Directions.S:
-                this.Rect.y += Player.DashSpeed;
-    
-            case Directions.E:
-                this.Rect.x += Player.DashSpeed;
-    
-            case Directions.W:
-                this.Rect.x -= Player.DashSpeed;
-    
-            case Directions.NE:
-                this.Rect.y -= Player.DashSpeed;
-                this.Rect.x += Player.DashSpeed;
-    
-            case Directions.NW:
-                this.Rect.y -= Player.DashSpeed;
-                this.Rect.x -= Player.DashSpeed;
-    
-            case Directions.SE:
-                this.Rect.y += Player.DashSpeed;
-                this.Rect.x += Player.DashSpeed;
-    
-            case Directions.SW:
-                this.Rect.y += Player.DashSpeed;
-                this.Rect.x -= Player.DashSpeed;
-    
-            default:
-                return;
-            }
-        }
+		switch (this.Direction)
+		{
+		case Directions.N:
+			this.Rect.y -= Player.DashSpeed;
+
+		case Directions.S:
+			this.Rect.y += Player.DashSpeed;
+
+		case Directions.E:
+			this.Rect.x += Player.DashSpeed;
+
+		case Directions.W:
+			this.Rect.x -= Player.DashSpeed;
+
+		case Directions.NE:
+			this.Rect.y -= Player.DashSpeed;
+			this.Rect.x += Player.DashSpeed;
+
+		case Directions.NW:
+			this.Rect.y -= Player.DashSpeed;
+			this.Rect.x -= Player.DashSpeed;
+
+		case Directions.SE:
+			this.Rect.y += Player.DashSpeed;
+			this.Rect.x += Player.DashSpeed;
+
+		case Directions.SW:
+			this.Rect.y += Player.DashSpeed;
+			this.Rect.x -= Player.DashSpeed;
+
+		default:
+			return;
+		}
     }
 
     public void SetPreviousPosition(int32 x, int32 y)
