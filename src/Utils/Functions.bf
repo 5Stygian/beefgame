@@ -7,9 +7,15 @@ using SDL3;
 public static class Utils
 {
     [Inline]
-    public static bool TestScanCode(SDL_Scancode ScanCode)
+    public static bool IsKeyHeld(SDL_Scancode Scancode)
     {
-        return Program.KeyStates[(int)ScanCode];
+        return Program.KeyStates[(int)Scancode];
+    }
+
+    [Inline]
+    public static bool IsKeyClicked(SDL_Event Event, SDL_Scancode Scancode)
+    {
+        return Program.KeyStates[(int)Scancode] && !Event.key.repeat;
     }
     
     [Inline]
