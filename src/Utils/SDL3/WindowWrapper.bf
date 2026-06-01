@@ -26,6 +26,7 @@ public struct WindowWrapper
         this.UpdateMembers();
     }
 
+    [Inline]
     public void UpdateMembers() mut {
         if (!SDL_GetWindowSizeInPixels(this.Window, (int32*)&this.Width, (int32*)&this.Height))
             Debug.WriteLine("SDL_GetWindowSizeInPixels failed: {0}", SDL_GetError());
@@ -37,6 +38,7 @@ public struct WindowWrapper
         this.CenterY = this.Height / 2;
     }
 
+    [Inline]
     public void DebugDisplay() mut
     {
         Debug.WriteLine(
@@ -52,6 +54,7 @@ public struct WindowWrapper
         );
     }
 
+    [Inline]
     public void Render()
     {
         SDL_FillSurfaceRect(
@@ -65,6 +68,7 @@ public struct WindowWrapper
         );
     }
 
+    [Inline]
     public void ChangeBackgroundColor(uint8 r, uint8 g, uint8 b) mut
     {
         this.r = r;
