@@ -27,6 +27,7 @@ public class Rect : IDrawable
         this.CollisionResult = *scope SDL_Rect();
     }
 
+    [Inline]
     public void Render(SDL_Surface* surface)
     {
         SDL_FillSurfaceRect(
