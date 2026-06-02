@@ -61,6 +61,11 @@ public static class Program
                     if (Utils.IsKeyClicked(Event, .SDL_SCANCODE_SPACE) && !Program.Player.IsDodging)
                         Program.Player.Dodge();
                 }
+                if (Utils.TestEventType(Event, .SDL_EVENT_KEY_UP))
+                {
+                    if (Program.Player.IsDodging === true)
+                        Program.Player.IsDodging = false;
+                }
             }
 
             SDL_PumpEvents();
