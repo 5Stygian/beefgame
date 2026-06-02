@@ -58,7 +58,7 @@ public static class Program
 
                 if (Utils.TestEventType(Event, .SDL_EVENT_KEY_DOWN))
                 {
-                    if (Utils.IsKeyClicked(Event, .SDL_SCANCODE_SPACE))
+                    if (Utils.IsKeyClicked(Event, .SDL_SCANCODE_SPACE) && !Program.Player.IsDodging)
                         Program.Player.Dodge();
                 }
             }

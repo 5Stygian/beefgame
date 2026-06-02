@@ -10,6 +10,7 @@ public class Player : Rect
     private static int32 MoveSpeed = 10;
     private static int32 DashSpeed = 150;
 
+    public bool IsDodging = false;
     public Directions Direction = Directions.ZILCH;
 
     private int32 lastX;
@@ -50,6 +51,7 @@ public class Player : Rect
 	[Inline]
     public void Dodge()
     {
+        this.IsDodging = true;
 		switch (this.Direction)
 		{
 		case Directions.N:
