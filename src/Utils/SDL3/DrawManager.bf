@@ -5,7 +5,8 @@ using SDL3;
 public static class DrawManager
 {
     private static int MaxRectIndex = 0;
-    private static Rect[] Rects = new Rect[10] ~ delete _;
+    private static int Size = 8;
+    private static Rect[] Rects = new Rect[Size] ~ delete _;
 
     public static void Render(SDL_Surface* surface)
     {
@@ -17,12 +18,12 @@ public static class DrawManager
 
     public static void Add(Rect rect)
     {
-        DrawManager.Rects[MaxRectIndex] = rect;
-        DrawManager.MaxRectIndex++;
+        Rects[MaxRectIndex] = rect;
+        MaxRectIndex++;
     }
 
     public static Rect Get(int index)
     {
-        return DrawManager.Rects[index];
+        return Rects[index];
     }
 }

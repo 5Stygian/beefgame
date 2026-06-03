@@ -13,19 +13,19 @@ public class Rect : IDrawable
 
     public this(int32 x, int32 y, int32 w, int32 h, uint8 r, uint8 g, uint8 b, uint8 a)
     {
-        this.Rect = *scope SDL_Rect();
-        this.Rect.x = x;
-        this.Rect.y = y;
-        this.Rect.w = w;
-        this.Rect.h = h;
+        Rect = *scope SDL_Rect();
+        Rect.x = x;
+        Rect.y = y;
+        Rect.w = w;
+        Rect.h = h;
 
-        this.Color = *scope SDL_Color();
-        this.Color.r = r;
-        this.Color.g = g;
-        this.Color.b = b;
-        this.Color.a = a;
+        Color = *scope SDL_Color();
+        Color.r = r;
+        Color.g = g;
+        Color.b = b;
+        Color.a = a;
 
-        this.CollisionResult = *scope SDL_Rect();
+        CollisionResult = *scope SDL_Rect();
 
         DrawManager.Add(this);
     }
@@ -35,11 +35,11 @@ public class Rect : IDrawable
     {
         SDL_FillSurfaceRect(
             surface,
-            &this.Rect,
+            &Rect,
             SDL_MapRGB(
                 SDL_GetPixelFormatDetails(surface.format),
                 null,
-                this.Color.r, this.Color.g, this.Color.b
+                Color.r, Color.g, Color.b
             )
         );
     }
@@ -47,36 +47,36 @@ public class Rect : IDrawable
     [Inline]
     public bool CheckCollision(Rect other)
     {
-        return SDL_GetRectIntersection(&this.Rect, &other.Rect, &this.CollisionResult);
+        return SDL_GetRectIntersection(&Rect, &other.Rect, &CollisionResult);
     }
 
     [Inline]
     public void ModX(int32 x)
     {
-        this.Rect.x += x;
+        Rect.x += x;
     }
     [Inline]
     public void ModY(int32 y)
     {
-        this.Rect.y += y;
+        Rect.y += y;
     }
 
     [Inline]
     public SDL_Color GetColor()
     {
-        return this.Color;
+        return Color;
     }
     [Inline]
     public void SetColor(SDL_Color color)
     {
-        this.Color = color;
+        Color = color;
     }
     [Inline]
     public void SetColor(uint8 r, uint8 g, uint8 b, uint8 a)
     {
-        this.Color.r = r;
-        this.Color.g = g;
-        this.Color.b = b;
-        this.Color.a = a;
+        Color.r = r;
+        Color.g = g;
+        Color.b = b;
+        Color.a = a;
     }
 }
