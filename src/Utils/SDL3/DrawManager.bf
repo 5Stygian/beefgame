@@ -2,19 +2,24 @@ namespace beefgame.Utils.SDL3;
 
 using System;
 using System.Collections;
+using System.Diagnostics;
 using SDL3;
 
-public static class DrawManager
+public class DrawManager<T> where T : IDrawable
 {
-    private static List<Rect> Rects;
+    // Turns out the problem was the fact that
+    // I didn't initialize it :/ 
+    private static List<T> Drawables = new List<T>() ~ delete _;
 
     public static void Render(SDL_Surface* surface)
     {
+        for (let Drawable in Drawables)
+            Drawable.Render(surface);
     }
 
     [Inline]
-    public static void Add(Rect rect)
+    public static void Add(T rect)
     {
-        Rects.Add(rect);
+        Drawables.Add(rect);
     }
 }

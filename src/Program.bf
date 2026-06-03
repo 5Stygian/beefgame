@@ -3,6 +3,7 @@ namespace beefgame;
 using beefgame.Utils;
 using beefgame.Utils.SDL3;
 using System;
+using System.Collections;
 using System.Diagnostics;
 using SDL3;
 
@@ -32,60 +33,58 @@ public static class Program
         }
         defer SDL_DestroyWindow(window);
 
-        Program.Window = scope WindowWrapper(window);
+        Window = scope WindowWrapper(window);
 
         Rect testRect = scope Rect(
-            0, 0, 200, (int32)Program.Window.Height,
+            0, 0, 200, (int32)Window.Height,
             255, 0, 0, 255
         );
 
-        Program.Player = scope Player(
-            (int32)Program.Window.CenterX, (int32)Program.Window.CenterY, 20, 20,
+        Player = scope Player(
+            (int32)Window.CenterX, (int32)Window.CenterY, 20, 20,
             255, 255, 255, 255
         );
 
-        Program.StartRunning();
-        while (Program.IsRunning)
+        StartRunning();
+        while (IsRunning)
         {
             SDL_Event Event = SDL_Event();
             while (SDL_PollEvent(&Event))
             {
                 if (Utils.TestEventType(Event, .SDL_EVENT_QUIT))
-                    Program.StopRunning();
+                    StopRunning();
 
                 if (Utils.TestEventType(Event, .SDL_EVENT_WINDOW_RESIZED))
-                    Program.Window.UpdateMembers();
+                    Window.UpdateMembers();
 
                 if (Utils.TestEventType(Event, .SDL_EVENT_KEY_DOWN))
                 {
-                    if (Utils.IsKeyClicked(Event, .SDL_SCANCODE_SPACE) && !Program.Player.IsDodging)
-                        Program.Player.Dodge();
+                    if (Utils.IsKeyClicked(Event, .SDL_SCANCODE_SPACE) && !Player.IsDodging)
+                        Player.Dodge();
                 }
                 if (Utils.TestEventType(Event, .SDL_EVENT_KEY_UP))
                 {
                     if (!Utils.IsKeyHeld(.SDL_SCANCODE_SPACE))
-                        Program.Player.IsDodging = false;
+                        Player.IsDodging = false;
                 }
             }
 
             SDL_PumpEvents();
 
-            Program.Player.Move();
+            Player.Move();
 
-            Program.CheckKeybinds();
+            CheckKeybinds();
 
-            Program.Window.Render();
+            Window.Render();
 
-            //DrawManager.Render(Program.Window.GetSurface());
-            testRect.Render(Program.Window.GetSurface());
-            Program.Player.Render(Program.Window.GetSurface());
+            DrawManager<Rect>.Render(Program.Window.GetSurface());
 
-            if (Program.Player.CheckCollision(testRect))
-                Program.Window.ChangeBackgroundColor(128, 128, 128);
+            if (Player.CheckCollision(testRect))
+                Window.ChangeBackgroundColor(128, 128, 128);
             else
-                Program.Window.ChangeBackgroundColor(0, 0, 0);
+                Window.ChangeBackgroundColor(0, 0, 0);
 
-            Program.Window.Update();
+            Window.Update();
 
             SDL_Delay(16);
         }
@@ -94,13 +93,13 @@ public static class Program
     [Inline]
     public static void StartRunning()
     {
-        Program.IsRunning = true;
+        IsRunning = true;
     }
 
     [Inline]
     public static void StopRunning()
     {
-        Program.IsRunning = false;
+        IsRunning = false;
     }
 
     [Inline]
@@ -109,15 +108,15 @@ public static class Program
         if (Utils.IsKeyHeld(.SDL_SCANCODE_LCTRL))
         {
             if (Utils.IsKeyHeld(.SDL_SCANCODE_C))
-                Program.StopRunning();
+                StopRunning();
             if (Utils.IsKeyHeld(.SDL_SCANCODE_W))
-                Program.Window.DebugDisplay();
+                Window.DebugDisplay();
         }
 
         if (Utils.IsKeyHeld(.SDL_SCANCODE_LALT))
         {
             if (Utils.IsKeyHeld(.SDL_SCANCODE_V))
-                Debug.WriteLine("{}", Program.Player.Direction);
+                Debug.WriteLine("{}", Player.Direction);
         }
     }
 }

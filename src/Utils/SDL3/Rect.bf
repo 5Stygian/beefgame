@@ -1,5 +1,6 @@
 namespace beefgame.Utils.SDL3;
 
+using beefgame.Utils.SDL3;
 using SDL3;
 using System;
 
@@ -27,7 +28,7 @@ public class Rect : IDrawable
 
         CollisionResult = *scope SDL_Rect();
 
-        //DrawManager.Add(this);
+        DrawManager<Rect>.Add(this);
     }
 
     [Inline]
