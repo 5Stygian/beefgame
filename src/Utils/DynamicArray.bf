@@ -25,13 +25,16 @@ public class DynamicArray<T>
 
     public int Search(T item)
     {
-        int returnValue = -1;
-
         for (int i < Size)
             if (Array[i] == item)
-                returnValue = i;
+                return i;
 
-        return returnValue;
+        return -1;
+    }
+
+    public T GetAt(int index)
+    {
+        return Array[index];
     }
 
     public void InsertAt(int index, T item)
@@ -39,8 +42,8 @@ public class DynamicArray<T>
         if (Size === Capacity)
             GrowArray();
 
-        for (int i = Size - 1; i >= index; i--)
-            Array[i] = Array[i + 1];
+        for (int i = Size; i >= index; i--)
+            Array[i] = Array[i - 1];
 
         Array[index] = item;
         Size++;
@@ -48,8 +51,10 @@ public class DynamicArray<T>
 
     public void DeleteAt(int index)
     {
-        for (int i = index; i < Size; i++)
+        for (int i = index; i < Size - 1; i++)
             Array[i] = Array[i + 1];
+
+        Size--;
 
         if (Size === (Capacity / 2))
             ShrinkArray();
@@ -67,6 +72,8 @@ public class DynamicArray<T>
 
     public void PopBack()
     {
+        if (Size === 0) return;
+
         Size--;
 
         if (Size == (Capacity / 2))
@@ -89,14 +96,13 @@ public class DynamicArray<T>
 
     public void ShrinkArray()
     {
-        Capacity = Size;
+        Capacity = Math.Max(1, Size);
         T[] temp = new T[Capacity];
-
+        
         for (int i < Size)
             temp[i] = Array[i];
-
+        
         delete Array;
-
         Array = temp;
     }
 

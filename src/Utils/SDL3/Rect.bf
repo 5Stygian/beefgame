@@ -27,7 +27,7 @@ public class Rect : IDrawable
 
         CollisionResult = *scope SDL_Rect();
 
-        DrawManager.Add(this);
+        //DrawManager.Add(this);
     }
 
     [Inline]

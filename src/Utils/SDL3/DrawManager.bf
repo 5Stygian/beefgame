@@ -1,29 +1,28 @@
 namespace beefgame.Utils.SDL3;
 
+using beefgame.Utils;
 using SDL3;
 
 public static class DrawManager
 {
-    private static int MaxRectIndex = 0;
-    private static int Size = 8;
-    private static Rect[] Rects = new Rect[Size] ~ delete _;
+    private static DynamicArray<Rect> Rects;
 
     public static void Render(SDL_Surface* surface)
     {
-        for (var i = 0; i < DrawManager.MaxRectIndex; i++)
+        for (var i = 0; i < DrawManager.Rects.GetSize(); i++)
         {
             DrawManager.Get(i).Render(surface);
         }
     }
 
+    // this is allegedly where the EXCEPTION_ACCESS_VIOLATION comes from
     public static void Add(Rect rect)
     {
-        Rects[MaxRectIndex] = rect;
-        MaxRectIndex++;
+        Rects.PushBack(rect);
     }
 
     public static Rect Get(int index)
     {
-        return Rects[index];
+        return Rects.GetAt(index);
     }
 }

@@ -39,14 +39,6 @@ public static class Program
             255, 0, 0, 255
         );
 
-        /*while (true)
-        {
-            new Rect(
-                0, 0, 200, 200,
-                255, 255, 255, 255
-            );
-        }*/
-
         Program.Player = scope Player(
             (int32)Program.Window.CenterX, (int32)Program.Window.CenterY, 20, 20,
             255, 255, 255, 255
@@ -84,8 +76,9 @@ public static class Program
 
             Program.Window.Render();
 
-            DrawManager.Render(Program.Window.GetSurface());
-            //Program.Player.Render(Program.Window.GetSurface());
+            //DrawManager.Render(Program.Window.GetSurface());
+            testRect.Render(Program.Window.GetSurface());
+            Program.Player.Render(Program.Window.GetSurface());
 
             if (Program.Player.CheckCollision(testRect))
                 Program.Window.ChangeBackgroundColor(128, 128, 128);
