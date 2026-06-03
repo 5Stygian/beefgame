@@ -11,7 +11,7 @@ public class Rect : IDrawable
 
     private SDL_Rect CollisionResult;
 
-    public this(int32 x, int32 y, int32 w, int32 h, uint8 r, uint8 g, uint8 b, uint8 a, bool IsBaseRect = true)
+    public this(int32 x, int32 y, int32 w, int32 h, uint8 r, uint8 g, uint8 b, uint8 a)
     {
         this.Rect = *scope SDL_Rect();
         this.Rect.x = x;
@@ -27,8 +27,7 @@ public class Rect : IDrawable
 
         this.CollisionResult = *scope SDL_Rect();
 
-        if (IsBaseRect)
-            DrawManager.Add(this);
+        DrawManager.Add(this);
     }
 
     [Inline]

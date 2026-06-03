@@ -34,15 +34,14 @@ public static class Program
 
         Program.Window = scope WindowWrapper(window);
 
-        Program.Player = scope Player(
-            (int32)Program.Window.CenterX, (int32)Program.Window.CenterY, 20, 20,
-            255, 255, 255, 255,
-            IsBaseRect: false
-        );
-
         Rect testRect = scope Rect(
             0, 0, 200, (int32)Program.Window.Height,
             255, 0, 0, 255
+        );
+
+        Program.Player = scope Player(
+            (int32)Program.Window.CenterX, (int32)Program.Window.CenterY, 20, 20,
+            255, 255, 255, 255
         );
 
         Program.StartRunning();
@@ -78,7 +77,7 @@ public static class Program
             Program.Window.Render();
 
             DrawManager.Render(Program.Window.GetSurface());
-            Program.Player.Render(Program.Window.GetSurface());
+            //Program.Player.Render(Program.Window.GetSurface());
 
             if (Program.Player.CheckCollision(testRect))
                 Program.Window.ChangeBackgroundColor(128, 128, 128);
