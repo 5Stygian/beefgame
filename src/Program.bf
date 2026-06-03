@@ -36,7 +36,8 @@ public static class Program
 
         Program.Player = scope Player(
             (int32)Program.Window.CenterX, (int32)Program.Window.CenterY, 20, 20,
-            255, 255, 255, 255
+            255, 255, 255, 255,
+            IsBaseRect: false
         );
 
         Rect testRect = scope Rect(
@@ -75,7 +76,8 @@ public static class Program
             Program.CheckKeybinds();
 
             Program.Window.Render();
-            testRect.Render(Program.Window.GetSurface());
+
+            DrawManager.Render(Program.Window.GetSurface());
             Program.Player.Render(Program.Window.GetSurface());
 
             if (Program.Player.CheckCollision(testRect))

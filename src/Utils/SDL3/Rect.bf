@@ -6,11 +6,12 @@ using System;
 public class Rect : IDrawable
 {
     public SDL_Rect Rect;
+
     protected SDL_Color Color;
 
     private SDL_Rect CollisionResult;
 
-    public this(int32 x, int32 y, int32 w, int32 h, uint8 r, uint8 g, uint8 b, uint8 a)
+    public this(int32 x, int32 y, int32 w, int32 h, uint8 r, uint8 g, uint8 b, uint8 a, bool IsBaseRect = true)
     {
         this.Rect = *scope SDL_Rect();
         this.Rect.x = x;
@@ -25,6 +26,9 @@ public class Rect : IDrawable
         this.Color.a = a;
 
         this.CollisionResult = *scope SDL_Rect();
+
+        if (IsBaseRect)
+            DrawManager.Add(this);
     }
 
     [Inline]
