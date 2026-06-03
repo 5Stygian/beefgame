@@ -1,6 +1,6 @@
 namespace beefgame.Utils;
 
-public enum Directions
+public enum Directions : uint8
 {
     ZILCH,
     N,
