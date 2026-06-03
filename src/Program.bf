@@ -63,11 +63,8 @@ public static class Program
                 }
                 if (Utils.TestEventType(Event, .SDL_EVENT_KEY_UP))
                 {
-                    if (Program.Player.IsDodging === true)
-                    {
+                    if (!Utils.IsKeyHeld(.SDL_SCANCODE_SPACE))
                         Program.Player.IsDodging = false;
-                        break;
-                    }
                 }
             }
 

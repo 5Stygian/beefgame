@@ -26,13 +26,13 @@ public class Player : Rect
         this.SetPreviousPosition(this.Rect.x, this.Rect.y);
 
         if (Utils.IsKeyHeld(.SDL_SCANCODE_W))
-            this.MoveUp();
+            this.Rect.y -= Player.MoveSpeed;
         if (Utils.IsKeyHeld(.SDL_SCANCODE_A))
-            this.MoveLeft();
+            this.Rect.x -= Player.MoveSpeed;
         if (Utils.IsKeyHeld(.SDL_SCANCODE_S))
-            this.MoveDown();
+            this.Rect.y += Player.MoveSpeed;
         if (Utils.IsKeyHeld(.SDL_SCANCODE_D))
-            this.MoveRight();
+            this.Rect.x += Player.MoveSpeed;
 
         // Prevent the player from leaving the window.
         if (!(0 < this.Rect.x))
@@ -87,12 +87,14 @@ public class Player : Rect
 		}
     }
 
+    [Inline]
     public void SetPreviousPosition(int32 x, int32 y)
     {
         this.lastX = x;
         this.lastY = y;
     }
 
+    [Inline]
     public void CheckDirection()
     {
         bool IsMovingNorth = this.lastY > this.Rect.y;
@@ -121,22 +123,5 @@ public class Player : Rect
 
         if (IsStill)
             this.Direction = Directions.ZILCH;
-    }
-
-    public void MoveRight()
-    {
-        this.Rect.x += Player.MoveSpeed;
-    }
-    public void MoveDown()
-    {
-        this.Rect.y += Player.MoveSpeed;
-    }
-    public void MoveLeft()
-    {
-        this.Rect.x -= Player.MoveSpeed;
-    }
-    public void MoveUp()
-    {
-        this.Rect.y -= Player.MoveSpeed;
     }
 }
