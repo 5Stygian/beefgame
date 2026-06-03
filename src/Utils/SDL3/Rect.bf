@@ -10,23 +10,23 @@ public class Rect : IDrawable
 
     protected SDL_Color Color;
 
-    private SDL_Rect CollisionResult;
+    private SDL_Rect CollisionRect;
 
     public this(int32 x, int32 y, int32 w, int32 h, uint8 r, uint8 g, uint8 b, uint8 a)
     {
         Rect = *scope SDL_Rect();
+        Color = *scope SDL_Color();
+        CollisionRect = *scope SDL_Rect();
+
         Rect.x = x;
         Rect.y = y;
         Rect.w = w;
         Rect.h = h;
 
-        Color = *scope SDL_Color();
         Color.r = r;
         Color.g = g;
         Color.b = b;
         Color.a = a;
-
-        CollisionResult = *scope SDL_Rect();
 
         DrawManager<Rect>.Add(this);
     }
@@ -48,7 +48,7 @@ public class Rect : IDrawable
     [Inline]
     public bool CheckCollision(Rect other)
     {
-        return SDL_GetRectIntersection(&Rect, &other.Rect, &CollisionResult);
+        return SDL_GetRectIntersection(&Rect, &other.Rect, &CollisionRect);
     }
 
     [Inline]

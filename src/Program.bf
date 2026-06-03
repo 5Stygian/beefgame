@@ -3,7 +3,6 @@ namespace beefgame;
 using beefgame.Utils;
 using beefgame.Utils.SDL3;
 using System;
-using System.Collections;
 using System.Diagnostics;
 using SDL3;
 
@@ -35,9 +34,8 @@ public static class Program
 
         Window = scope WindowWrapper(window);
 
-        Rect testRect = scope Rect(
-            0, 0, 200, (int32)Window.Height,
-            255, 0, 0, 255
+        Killbox testKillbox = scope Killbox(
+            0, 0, 200, (int32)Window.Height
         );
 
         Player = scope Player(
@@ -77,9 +75,9 @@ public static class Program
 
             Window.Render();
 
-            DrawManager<Rect>.Render(Program.Window.GetSurface());
+            DrawManager<Rect>.Render(Window.GetSurface());
 
-            if (Player.CheckCollision(testRect))
+            if (Player.CheckCollision(testKillbox))
                 Window.ChangeBackgroundColor(128, 128, 128);
             else
                 Window.ChangeBackgroundColor(0, 0, 0);
