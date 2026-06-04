@@ -9,11 +9,13 @@ using SDL3;
 public static class Program
 {
     public static bool IsRunning = false;
-
     public static Player Player;
-
+    
     public static WindowWrapper* Window;
+    public static SDL_Renderer* Renderer;
     public static bool* KeyStates = SDL_GetKeyboardState(null);
+
+    private static SDL_Window* _Window;
 
     public static void Main()
     {
@@ -24,15 +26,22 @@ public static class Program
         }
         defer SDL_Quit();
 
-        SDL_Window* window = SDL_CreateWindow("beefgame", 1280, 720, .SDL_WINDOW_RESIZABLE);
+        /*SDL_Window* window = SDL_CreateWindow("beefgame", 1280, 720, .SDL_WINDOW_RESIZABLE);
         if (window === null)
         {
             Debug.WriteLine("SDL_CreateWindow failed: {0}", SDL_GetError());
             return;
         }
-        defer SDL_DestroyWindow(window);
+        defer SDL_DestroyWindow(window);*/
 
-        Window = scope WindowWrapper(window);
+        if (!SDL_CreateWindowAndRenderer("beefgame", 1280, 720, .SDL_WINDOW_RESIZABLE, &_Window, &Renderer))
+        {
+            Debug.WriteLine("SDL_CreateWindowAndRenderer failed: {0}", SDL_GetError());
+            return;
+        }
+        defer SDL_DestroyWindow(_Window)
+
+        Window = scope WindowWrapper(_Window);
 
         Killbox testKillbox = scope Killbox(
             0, 0, 200, (int32)Window.Height
