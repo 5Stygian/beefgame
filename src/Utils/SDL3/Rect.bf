@@ -6,8 +6,7 @@ using System;
 
 public class Rect : IDrawable
 {
-    public SDL_Rect Rect;
-
+    protected SDL_Rect Rect;
     protected SDL_Color Color;
 
     private SDL_Rect CollisionRect;
