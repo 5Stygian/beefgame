@@ -39,7 +39,7 @@ public static class Program
             Debug.WriteLine("SDL_CreateWindowAndRenderer failed: {0}", SDL_GetError());
             return;
         }
-        defer SDL_DestroyWindow(_Window)
+        defer SDL_DestroyWindow(_Window);
 
         Window = scope WindowWrapper(_Window);
 
