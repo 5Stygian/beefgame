@@ -22,6 +22,6 @@ public class Killbox : Rect
         KillboxColor.b = 0;
         KillboxColor.a = 255;
 
-        this.SetColor(*KillboxColor);
+        SetColor(*KillboxColor);
     }
 }
