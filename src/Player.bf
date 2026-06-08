@@ -18,7 +18,6 @@ public class Player : Rect
 
     public this(int32 x, int32 y, int32 w, int32 h, uint8 r, uint8 g, uint8 b, uint8 a) : base(x, y, w, h, r, g, b, a) {}
 
-    [Inline]
     public void Move()
     {
         SetPreviousPosition(Rect.x, Rect.y);
@@ -46,7 +45,6 @@ public class Player : Rect
         CheckDirection();
     }
 
-	[Inline]
     public void Dodge()
     {
         IsDodging = true;
@@ -86,15 +84,24 @@ public class Player : Rect
 		}
     }
 
+    public bool CheckCollisions()
+    {
+        for (let rect in DrawManager<Rect>.GetDrawables())
+            if (CheckCollision(rect) && rect != this)
+                return true;
+
+        return false;
+    }
+
     [Inline]
-    public void SetPreviousPosition(int32 x, int32 y)
+    private void SetPreviousPosition(int32 x, int32 y)
     {
         lastX = x;
         lastY = y;
     }
 
     [Inline]
-    public void CheckDirection()
+    private void CheckDirection()
     {
         bool IsMovingNorth = lastY > Rect.y;
         bool IsMovingSouth = lastY < Rect.y;

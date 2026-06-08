@@ -5,7 +5,7 @@ using System.Collections;
 using System.Diagnostics;
 using SDL3;
 
-public class DrawManager<T> where T : IDrawable
+public class DrawManager<T> where T : IDrawable, delete
 {
     // Turns out the problem was the fact that
     // I didn't initialize it :/ 
@@ -20,6 +20,12 @@ public class DrawManager<T> where T : IDrawable
     [Inline]
     public static void Add(T rect)
     {
-        Drawables.Add(rect);
+        Drawables.AddFront(rect);
+    }
+
+    [Inline]
+    public static List<T> GetDrawables()
+    {
+        return Drawables;
     }
 }

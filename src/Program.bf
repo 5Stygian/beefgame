@@ -15,6 +15,9 @@ public static class Program
     public static SDL_Renderer* Renderer;
     public static bool* KeyStates = SDL_GetKeyboardState(null);
 
+    public static uint64 StartTick = SDL_GetTicks();
+    public static uint64 CurrentTick, LastTick = 0;
+
     private static SDL_Window* _Window;
 
     public static void Main()
@@ -26,14 +29,6 @@ public static class Program
         }
         defer SDL_Quit();
 
-        /*SDL_Window* window = SDL_CreateWindow("beefgame", 1280, 720, .SDL_WINDOW_RESIZABLE);
-        if (window === null)
-        {
-            Debug.WriteLine("SDL_CreateWindow failed: {0}", SDL_GetError());
-            return;
-        }
-        defer SDL_DestroyWindow(window);*/
-
         if (!SDL_CreateWindowAndRenderer("beefgame", 1280, 720, .SDL_WINDOW_RESIZABLE, &_Window, &Renderer))
         {
             Debug.WriteLine("SDL_CreateWindowAndRenderer failed: {0}", SDL_GetError());
@@ -43,10 +38,6 @@ public static class Program
 
         Window = scope WindowWrapper(_Window);
 
-        Killbox testKillbox = scope Killbox(
-            0, 0, 200, (int32)Window.Height
-        );
-
         Player = scope Player(
             (int32)Window.CenterX, (int32)Window.CenterY, 20, 20,
             255, 255, 255, 255
@@ -55,6 +46,8 @@ public static class Program
         StartRunning();
         while (IsRunning)
         {
+            CurrentTick = SDL_GetTicks();
+
             SDL_Event Event = SDL_Event();
             while (SDL_PollEvent(&Event))
             {
@@ -82,11 +75,18 @@ public static class Program
 
             CheckKeybinds();
 
+            if (CurrentTick > LastTick + 1000)
+            {
+                Killbox.CreateNew();
+
+                LastTick = CurrentTick;
+            }
+
             Window.Render();
 
             DrawManager<Rect>.Render(Window.GetSurface());
 
-            if (Player.CheckCollision(testKillbox))
+            if (Player.CheckCollisions())
                 Window.ChangeBackgroundColor(128, 128, 128);
             else
                 Window.ChangeBackgroundColor(0, 0, 0);

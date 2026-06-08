@@ -24,4 +24,12 @@ public class Killbox : Rect
 
         SetColor(*KillboxColor);
     }
+
+    public static Killbox CreateNew()
+    {
+        return new Killbox(
+            (int32)scope Random().Next(0, Program.Window.Width), (int32)scope Random().Next(0, Program.Window.Height),
+            (int32)scope Random().Next(10, 100), (int32)scope Random().Next(10, 100)
+        );
+    }
 }
